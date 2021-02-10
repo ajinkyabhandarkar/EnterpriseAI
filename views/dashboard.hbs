@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=yes">
+    <title>Sentiment Analysis using Text </title>
+    <meta name="description" content="Chat Bot UI/UX & html for web" />
+    <meta name="keywords" content="Chat Bot UI/UX & html for web, UI/UX for chat bot, chat bot html, best chatbot, chatbot app, online chat bot plugin" />
+    <meta name="author" content="css3transition" />
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="description" content="Chat Bot UI/UX & html for web, UI/UX for chat bot, chat bot html, best chatbot, chatbot app, online chat bot plugin | Css3Transition " />
+    <meta name="keywords" content="Chat Bot UI/UX & html for web, UI/UX for chat bot, chat bot html, best chatbot, chatbot app, online chat bot plugin" />
+    <meta name="abstract" content="Chat Bot UI/UX & html for web, UI/UX for chat bot, chat bot html, best chatbot, chatbot app, online chat bot plugin">
+    <meta name="author" content="Rahul Yaduvanshi">
+    <meta name="technologies" content="HTML5, CSS3, HTML, CSS, JQUERY, Bootstrap, Angular">
+    <meta name="distribution" content="Global">
+    <meta name="development" content="Rahul Yaduvanshi">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="city" content="New Delhi">
+    <meta name="country" content="india">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="/css/select2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/chatBot.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/timeline.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+</style>
+ <script defer src="https://cdn.socket.io/socket.io-1.2.0.js"></script> 
+{{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js">  --}}
+</script> 
+</head>
+<body>
+
+<div class="topnav" id="myTopnav">
+  <a href="/dashboard" class="">Home</a>
+
+  <a href="/logout">Logout</a>
+  <a href="/javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+
+<center>
+  <div class="container">
+    <div class="row">
+      <div class="col.md-12 r">
+        <img src="./img/cabinet.jpg" style="display: block;margin-left: auto;margin-right: auto;width: 50%;"/>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+        <ul id="messages"></ul>
+<form action="">
+    <input id="m" placeholder="Comment Please" autocomplete="off" /><button>Send</button>
+</form> 
+          {{!-- <li><a href="#"> {{sess}}</a></li>  --}}
+          <p id="userid" hidden>{{sess}}</p>
+        </div>
+    </div>
+</div></center>
+
+<!-- Chat Bot UI Ends -->
+
+<script type="257be86a981729866f2fa61c-text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-83834093-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js" data-cf-settings="257be86a981729866f2fa61c-|49" defer=""></script>
+<!-- Time line Html Ends -->
+<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/select2.min.js"></script>
+ <script>
+        $(document).ready(function(){
+            $(".select2_el").select2({
+            });
+        });
+        </script>
+<script>
+    $(document).ready(function () {
+        //Toggle fullscreen
+        $(".chat-bot-icon").click(function (e) {
+            $(this).children('img').toggleClass('hide');
+            $(this).children('svg').toggleClass('animate');
+            $('.chat-screen').toggleClass('show-chat');
+        });
+        $('.chat-mail button').click(function () {
+            $('.chat-mail').addClass('hide');
+            $('.chat-body').removeClass('hide');
+            $('.chat-input').removeClass('hide');
+            $('.chat-header-option').removeClass('hide');
+            $("#m").focus();
+        });
+        $('.end-chat').click(function () {
+            $('.chat-body').addClass('hide');
+            $('.chat-input').addClass('hide');
+            $('.chat-session-end').removeClass('hide');
+            $('.chat-header-option').addClass('hide');
+        });
+    });
+
+</script>
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+     var sess=document.getElementById("userid").innerHTML;
+     var usercomment;
+    socket.on('connect', function(data) {
+        socket.emit('joined', 'Hello World from client');
+    });
+    socket.on('acknowledge', function(data) {
+        //alert(data);
+    });
+    $('form').submit(function(e){
+        e.preventDefault();
+        socket.emit('chat message', $('#m').val());
+        usercomment=$('#m').val()+" From "+sess;
+        $('#messages').append($('<div class="chat-bubble me bg-success text-light">').text($('#m').val()+" From "+sess));
+        $('#m').val('');
+        $('#m').focus();
+        $(".messages").stop().animate({ scrollTop: $(".messages")[0].scrollHeight}, 1000);
+
+        return false;
+    });
+    socket.on('response message', function(data) {
+        //var arrdta=data.split("~");
+      //  var msg=arrdta[0];
+       // var timee=arrdta[1];
+       // var msgtimedata="<div>"+msg+"</div><span>"+timee+"</span>";
+        $('#messages').append($('<div class="chat-bubble you bg-warning text-dark">').html(data));
+
+            $.ajax({
+      method: 'post',
+      url: 'http://localhost/text/admin/updatesentiment.php',
+      data: {
+        'userid': sess,
+        'sentiment': data,
+        'usercomment':usercomment
+      },
+      success: function(data) {
+		 
+      }
+    });
+
+    });
+
+</script>
+
+<script>
+   $.ajax({    //create an ajax request to display.php
+        type: "GET",
+        url: "http://localhost/text/admin/display.php",             
+        dataType: "html",   //expect html to be returned                
+        success: function(response){                    
+            $("#messages").html(response); 
+            //alert(response);
+        }
+   });
+</script>
+</body>
+
+</html>
